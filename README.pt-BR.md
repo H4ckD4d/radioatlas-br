@@ -61,3 +61,13 @@ Declaramos apoio ao trabalho lícito de proteção de vidas, salvamento e defesa
 [Threat model](docs/THREAT_MODEL.md) · [Red Team engineering](docs/REDTEAM_ENGINEERING.md) · [Roadmap](docs/ROADMAP.md) · [Codex instructions](AGENTS.md)
 
 **© 2026 Chris Cruz (@h4ckd4d).**
+
+## Próximo incremento técnico (v0.2 candidate)
+
+Exportação CSV com prevenção básica de fórmulas em planilhas; dados de exemplo fictícios.
+
+```bash
+radioatlas export-csv --state RJ --output ./radioatlas-demo.csv
+```
+
+**Chris Cruz — @h4ckd4d**.
