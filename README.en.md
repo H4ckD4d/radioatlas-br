@@ -71,3 +71,13 @@ radioatlas export-csv --state RJ --output ./radioatlas-demo.csv
 ```
 
 **Chris Cruz — @h4ckd4d**.
+
+## v0.3 candidate enhancement
+
+Dataset validation for duplicates and invalid coordinates:
+
+```bash
+radioatlas validate --data samples/repeaters.json
+```
+
+[Commercial roadmap](docs/COMMERCIAL.md) · Chris Cruz — @h4ckd4d.

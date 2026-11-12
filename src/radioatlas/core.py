@@ -19,11 +19,15 @@ def configure(sub):
     e=sub.add_parser('export-csv',help='Export filtered catalog to CSV (spreadsheet-safe)')
     e.add_argument('--data', default=str(Path(__file__).resolve().parents[2]/'samples'/'repeaters.json'))
     e.add_argument('--output', required=True);e.add_argument('--state', default='');e.add_argument('--mode', default='');e.add_argument('--city', default='')
+    v=sub.add_parser('validate',help='Detect duplicate records and invalid coordinates')
+    v.add_argument('--data',default=str(Path(__file__).resolve().parents[2]/'samples'/'repeaters.json'))
 
 def run(args):
     matching = search(records(args.data), args.state, args.mode, args.city)
     if args.command == 'export-csv':
         return export_csv(matching, args.output)
+    if args.command == 'validate':
+        return validate_catalog(records(args.data))
     return {'records':matching, 'warning':'All bundled data is fictional; not for radio operation or emergency use.'}
 
 def demo():
@@ -54,3 +58,22 @@ def export_csv(data, destination):
             writer.writerow({k: safe(record.get(k)) for k in EXPORT_FIELDS})
     return {'exported': len(data), 'output': str(path),
             'warning': 'Check dataset provenance and radio regulations before operational use.'}
+
+
+def validate_catalog(data):
+    """Catalog consistency checks; does not validate frequencies or authorization."""
+    from math import isfinite
+    seen=set(); issues=[]
+    for row_no,row in enumerate(data,1):
+        key=tuple(str(row.get(k,'')).casefold() for k in ('state','city','mode','frequency_mhz'))
+        if key in seen: issues.append({'row':row_no,'issue':'duplicate-repeater-record'})
+        seen.add(key)
+        for field,minimum,maximum in (('latitude',-90,90),('longitude',-180,180)):
+            if row.get(field) is None: continue
+            try:
+                v=float(row[field])
+                if not isfinite(v) or not minimum<=v<=maximum: raise ValueError
+            except (ValueError,TypeError):
+                issues.append({'row':row_no,'issue':'invalid-'+field})
+    return {'records':len(data),'valid':not issues,'problems':issues,
+            'warning':'Internal checks are not proof that source data is accurate or legally usable.'}

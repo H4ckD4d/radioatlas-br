@@ -29,3 +29,12 @@ class CoreTests(unittest.TestCase):
             with target.open(encoding='utf-8',newline='') as f:
                 row=next(csv.DictReader(f))
             self.assertEqual(row['city'], "'=1+2")
+
+    def test_detect_duplicate_catalog(self):
+        from radioatlas.core import validate_catalog
+        row={'state':'RJ','city':'X','mode':'FM','frequency_mhz':146.1}
+        self.assertEqual(validate_catalog([row,row])['problems'][0]['issue'],'duplicate-repeater-record')
+    def test_invalid_coordinates(self):
+        from radioatlas.core import validate_catalog
+        row={'state':'RJ','city':'X','mode':'FM','frequency_mhz':146.1,'latitude':999,'longitude':'nan'}
+        self.assertEqual(len(validate_catalog([row])['problems']),2)
