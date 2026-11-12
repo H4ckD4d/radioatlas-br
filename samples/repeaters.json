@@ -1,0 +1,29 @@
+[
+  {
+    "id": "DEMO-RJ-001",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "mode": "DMR",
+    "verified": false,
+    "source": "Fictional demo - not for radio use",
+    "frequency_mhz": null
+  },
+  {
+    "id": "DEMO-SP-002",
+    "city": "São Paulo",
+    "state": "SP",
+    "mode": "FM",
+    "verified": false,
+    "source": "Fictional demo - not for radio use",
+    "frequency_mhz": null
+  },
+  {
+    "id": "DEMO-ES-003",
+    "city": "Vitória",
+    "state": "ES",
+    "mode": "D-STAR",
+    "verified": false,
+    "source": "Fictional demo - not for radio use",
+    "frequency_mhz": null
+  }
+]

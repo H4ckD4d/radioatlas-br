@@ -1,0 +1,16 @@
+[build-system]
+requires=["setuptools>=68"]
+build-backend="setuptools.build_meta"
+[project]
+name="radioatlas-br"
+version="0.1.0"
+description="Open collaborative amateur-radio catalog"
+requires-python=">=3.11"
+authors=[{name="Chris Cruz (@h4ckd4d)"}]
+dependencies=[]
+[project.optional-dependencies]
+ai=["google-genai>=1.0,<3"]
+[project.scripts]
+radioatlas="radioatlas.cli:main"
+[tool.setuptools.packages.find]
+where=["src"]
